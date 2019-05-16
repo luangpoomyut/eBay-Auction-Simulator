@@ -1,0 +1,67 @@
+{% extends "app_base.html" %}
+{% block content %}
+<form method="POST" action="auctioninfo" role="form" style="max-width:400px; width:100%">
+<div class="form-group">
+        <label for="userID">Enter in the item ID of the auction data you want to view</label>
+        <input type="text" name="itemID" class="form-control" id="itemID" />
+</div>
+<div><input type="submit" value="Get Auction Data" class="btn btn-primary" /></div>
+</form>
+<h3>Auction Data</h3>
+<div>{{ItemID}}</div>
+{% if (sr1) %}
+
+    <div>
+        <strong>ItemID</strong>: {{sr1[0].ItemID}} <br>
+        <strong>Ends</strong>: {{sr1[0].Ends}} <br>
+        <strong>First Bid</strong>: {{sr1[0].First_Bid}} <br>
+        <strong>Name</strong>: {{sr1[0].Name}} <br>
+        <strong>Started</strong>: {{sr1[0].Started}} <br>
+        <strong>Number of Bids</strong>: {{sr1[0].Number_of_Bids}} <br>
+        <strong>Currently</strong>: {{sr1[0].Currently}} <br>
+        <strong>Buy Price</strong>: {{sr1[0].Buy_Price}} <br>
+        <strong>Seller UserID</strong>: {{sr1[0].Seller_UserID}} <br>
+        <strong>Description</strong>: {{sr1[0].Description}} <br>
+    </div>
+
+    {% if (sr2) %}
+        <div>
+            <strong>Categories</strong>:
+        </div>
+        <ul>
+        {% for cat in sr2 %}
+            <div> 
+                {{cat.Category}}
+            </div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if (cTime > sr1[0].Ends) or (sr1[0].Currently>=sr1[0].Buy_Price) %}
+        <strong>Auction is closed. </strong>
+    {% endif %}
+
+    {% if (sr3) %}
+
+        {% if (cTime > sr1[0].Ends) or (sr1[0].Currently>=sr1[0].Buy_Price) %}
+        <strong>Winner is <em>{{ sr3[0].UserID }}</em>. <br><br> </strong>
+        {% endif %}
+
+        <div><strong>Bids</strong>:</div>
+        <ul>
+        {% for result in sr3 %}
+            {% for key in result %}
+                <div>
+                    <span>{{ key}}</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span>{{ result[key] }}</span>
+                </div>
+                {% endfor %}
+                <div>--------</div>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% else %}
+<div>No Results</div>
+{% endif %}
+{% endblock %}
