@@ -2,6 +2,8 @@
 
 This web application simulates the auctioning system of the well-known eBay site in static time (snapshots).
 
+Authors: Kevin Luangpoomyut, Siyuan Ma, Colton Brezinsky
+
 ## Design
 
 *Front End*\
